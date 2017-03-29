@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 
 from .models import Photo
@@ -11,7 +11,7 @@ def hello(request):
 
 # root\photos\$
 def detail(request, pk):
-    photo = Photo.objects.get(pk=pk)
+    photo = get_object_or_404(Photo, pk=pk)
 
     messages = (
         '<p>{pk}번 사진 보여줄게요</p>'.format(pk=photo.pk),
