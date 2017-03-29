@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from .models import Photo
@@ -23,14 +23,19 @@ def detail(request, pk):
     return HttpResponse('\n'.join(messages))
 
 
+@login_required
 def create(request):
+    # 후략
     if request.method == "GET":
         form = PhotoForm()
     elif request.method == "POST":
         form = PhotoForm(request.POST, request.FILES)
 
         if form.is_valid():
-            obj = form.save()
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+
             return redirect(obj)
 
     ctx = {
