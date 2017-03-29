@@ -6,5 +6,6 @@ def hello(request):
     return HttpResponse('Hello django!')
 
 
-def detail(request):
-    return HttpResponse('detail 뷰 함수')
+def detail(request, pk):
+    msg = '{}번 사진 보여줄게요.'.format(pk)
+    return HttpResponse(msg)
