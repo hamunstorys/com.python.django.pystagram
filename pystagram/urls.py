@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+
 from django.contrib import admin
 
 from photos.views import hello
@@ -25,3 +26,8 @@ urlpatterns = [
     url(r'^photos/(?P<pk>[0-9]+)/$',
         detail, name='detail'),
 ]
+
+from django.conf.urls.static import static
+from django.conf import settings
+
+urlpatterns += static('upload_files', document_root=settings.MEDIA_ROOT)
