@@ -1,18 +1,19 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import Photo
 from .forms import PhotoForm
 
 
-# root\hello/$
 def hello(request):
-    return HttpResponse('Hello django!')
+    return HttpResponse('안녕하세요!')
 
 
-# root\photos\$
 def detail(request, pk):
+    # photo = Photo.objects.get(pk=pk)
     photo = get_object_or_404(Photo, pk=pk)
 
     messages = (
@@ -25,7 +26,6 @@ def detail(request, pk):
 
 @login_required
 def create(request):
-    # 후략
     if request.method == "GET":
         form = PhotoForm()
     elif request.method == "POST":
@@ -43,3 +43,4 @@ def create(request):
     }
 
     return render(request, 'edit.html', ctx)
+
